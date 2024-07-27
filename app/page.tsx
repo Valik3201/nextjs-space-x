@@ -1,5 +1,6 @@
-import Link from "next/link";
 import type { Rocket } from "@/app/type";
+import { StyledLink } from "@/components/styled-link";
+import { RocketBadge } from "@/components/rocket-badge";
 
 export default async function Home() {
   const URL = "https://api.spacexdata.com/v4/rockets";
@@ -9,14 +10,23 @@ export default async function Home() {
   const rockets: Rocket[] = await res.json();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>SpaceX Rockets</h1>
-      <ul>
+    <main>
+      <ul className="space-y-6 md:space-y-12">
         {rockets.map((rocket) => (
-          <li key={rocket.id}>
-            <h2 className="font-bold">{rocket.name}</h2>
-            <p>{rocket.description}</p>
-            <Link href={`/rocket/${rocket.id}`}>Read more</Link>
+          <li key={rocket.id} className="space-y-4">
+            <div className="flex gap-4 items-start">
+              <h2 className="text-4xl tracking-tight leading-none md:text-5xl lg:text-7xl">
+                {rocket.name}
+              </h2>
+
+              <RocketBadge active={rocket.active} />
+            </div>
+
+            <p className=" tracking-wide">{rocket.description}</p>
+
+            <div>
+              <StyledLink href={`/rocket/${rocket.id}`}>Read more</StyledLink>
+            </div>
           </li>
         ))}
       </ul>
