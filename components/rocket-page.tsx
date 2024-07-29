@@ -1,25 +1,16 @@
-import type { Rocket } from "@/app/type";
-
 import * as data from "@/lib/rocketDataPreparation";
-
-import { StyledLink } from "@/components/styled-link";
+import { Calendar, CircleDollarSign, ExternalLink, MapPin } from "lucide-react";
+import { CarouselComponent } from "@/components/carousel-component";
+import { OverviewSection } from "@/components/overview-section";
 import { RocketBadge } from "@/components/rocket-badge";
+import { RocketCarousel } from "@/components/rocket-carousel";
 import { RocketInfoItem } from "@/components/rocket-info-item";
 import { RocketSection } from "@/components/rocket-section";
-import { OverviewSection } from "@/components/overview-section";
 import { StageSection } from "@/components/stage-section";
-import { RocketCarousel } from "@/components/rocket-carousel";
+import { StyledLink } from "@/components/styled-link";
+import type { Rocket } from "@/app/type";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { Calendar, MapPin, CircleDollarSign, ExternalLink } from "lucide-react";
-
-export default function RocketPage({ rocket }: { rocket: Rocket }) {
+export function RocketPage({ rocket }: { rocket: Rocket }) {
   const overviewData = data.prepareOverviewData(rocket);
   const firstStageData = data.prepareStageData(rocket.first_stage);
   const secondStageData = data.prepareStageData(rocket.second_stage);
@@ -28,6 +19,16 @@ export default function RocketPage({ rocket }: { rocket: Rocket }) {
   const engineGeneralData = data.prepareEngineGeneralData(rocket.engines);
   const engineSeaLevelData = data.prepareEngineSeaLevelData(rocket.engines);
   const engineVacuumData = data.prepareEngineVacuumData(rocket.engines);
+
+  const carouselData1 = [
+    { title: "Payloads", content: payloadData },
+    { title: "Landing Legs", content: landingLegsData },
+  ];
+
+  const carouselData2 = [
+    { title: "Sea Level", content: engineSeaLevelData },
+    { title: "Vacuum", content: engineVacuumData },
+  ];
 
   return (
     <section className="space-y-12">
@@ -73,60 +74,11 @@ export default function RocketPage({ rocket }: { rocket: Rocket }) {
         <StageSection data={secondStageData} />
       </RocketSection>
 
-      <Carousel
-        opts={{
-          align: "start",
-        }}
-        className="w-full max-w-3xl"
-      >
-        <CarouselContent>
-          <CarouselItem>
-            <RocketSection subtitle="Payloads">
-              <StageSection data={payloadData} />
-            </RocketSection>
-          </CarouselItem>
-
-          <CarouselItem>
-            <RocketSection subtitle="Landing Legs">
-              <StageSection data={landingLegsData} />
-            </RocketSection>
-          </CarouselItem>
-        </CarouselContent>
-
-        <div className="inline-flex justify-between w-full py-4">
-          <CarouselPrevious />
-          <CarouselNext />
-        </div>
-      </Carousel>
+      <CarouselComponent data={carouselData1} />
 
       <RocketSection title={rocket.engines.type} subtitle="Engine">
         <StageSection data={engineGeneralData} />
-
-        <Carousel
-          opts={{
-            align: "start",
-          }}
-          className="w-full max-w-3xl mt-6"
-        >
-          <CarouselContent>
-            <CarouselItem>
-              <RocketSection subtitle="Sea Level">
-                <StageSection data={engineSeaLevelData} />
-              </RocketSection>
-            </CarouselItem>
-
-            <CarouselItem>
-              <RocketSection subtitle="Vacuum">
-                <StageSection data={engineVacuumData} />
-              </RocketSection>
-            </CarouselItem>
-          </CarouselContent>
-
-          <div className="inline-flex justify-between w-full py-4">
-            <CarouselPrevious />
-            <CarouselNext />
-          </div>
-        </Carousel>
+        <CarouselComponent data={carouselData2} />
       </RocketSection>
 
       <StyledLink href={rocket.wikipedia} className="inline-flex items-center">
