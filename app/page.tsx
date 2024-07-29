@@ -5,7 +5,6 @@ import type { Rocket } from "@/app/type";
 
 export default async function Home() {
   const res = await fetch(URL);
-
   const rockets: Rocket[] = await res.json();
 
   return (
