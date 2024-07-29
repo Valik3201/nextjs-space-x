@@ -1,10 +1,9 @@
-import type { Rocket } from "@/app/type";
-import { StyledLink } from "@/components/styled-link";
 import { RocketBadge } from "@/components/rocket-badge";
+import { StyledLink } from "@/components/styled-link";
+import { URL } from "@/lib/constants";
+import type { Rocket } from "@/app/type";
 
 export default async function Home() {
-  const URL = "https://api.spacexdata.com/v4/rockets";
-
   const res = await fetch(URL);
 
   const rockets: Rocket[] = await res.json();

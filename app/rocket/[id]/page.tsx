@@ -1,6 +1,6 @@
-import type { Rocket } from "@/app/type";
-import RocketPage from "@/components/rocket";
+import { RocketPage } from "@/components/rocket-page";
 import { StyledLink } from "@/components/styled-link";
+import type { Rocket } from "@/app/type";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const URL = "https://api.spacexdata.com/v4/rockets";
