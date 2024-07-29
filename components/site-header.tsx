@@ -1,12 +1,11 @@
-import type { Rocket } from "@/app/type";
-import spaceXLogo from "../public/spacex-logo.svg";
 import Image from "next/image";
 import Link from "next/link";
+import spaceXLogo from "../public/spacex-logo.svg";
 import { StyledLink } from "./styled-link";
+import { URL } from "@/lib/constants";
+import type { Rocket } from "@/app/type";
 
 export default async function SiteHeader() {
-  const URL = "https://api.spacexdata.com/v4/rockets";
-
   const res = await fetch(URL);
 
   const rockets: Rocket[] = await res.json();
